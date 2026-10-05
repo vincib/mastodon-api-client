@@ -14,7 +14,7 @@ if (is_file(__DIR__."/config.php")) include(__DIR__."/config.php");
 
 if (!defined('MSTDN_DOC_ROOT')) define('MSTDN_DOC_ROOT','/home/benjamin/mastox/mastodon-doc');
 if (!defined('ENTITIES_JSON')) define('ENTITIES_JSON',__DIR__.'/../assets/entities.json');
-if (!defined('DEBUG')) define('DEBUG',true);
+if (!defined('DEBUG')) define('DEBUG',false);
 
 $data=[];
 
@@ -42,12 +42,12 @@ file_put_contents(
     json_encode($data,JSON_PRETTY_PRINT)
 );
 
-echo "Saved from mastodon-doc at commit ";
-$out=[]
+$out=[];
 exec('git -C '.escapeshellarg(MSTDN_DOC_ROOT).' rev-parse HEAD',$out);
+echo "Saved from mastodon-doc at commit ".$out[0];
 // save the current commit of the mastodon documentation to the same file but named .commit :
 file_put_contents(
-    substr(ENTITIES_JSON,0,-4).'.commit',
+    substr(ENTITIES_JSON,0,-4).'commit',
     $out[0]
 );
 
